@@ -10,6 +10,10 @@ body {
 
     font-family: Lato, sans-serif; 
 
+   
+
+    max-width: 1000px;
+
     background: #B2FEFA; 
 
     /* fallback for old browsers */ 
@@ -26,11 +30,18 @@ body {
 
 body.dark-theme {
     background: #333;
-    color: #fff;
+    color: #ff6600;
 }
 
 
 
+.stock-ticker {
+    text-align: center;
+    padding: 10px;
+    background-color: #ffffff; /* Adjust the background color as needed */
+    border: 1px solid #ccc; /* Adjust the border styles as needed */
+    margin-top: 15px; /* Adjust the margin as needed */
+  }
 
 #title { 
 
@@ -46,17 +57,6 @@ body.dark-theme {
 
  
 
-.container { 
-
-    display: block; 
-
-    width: 40vw; 
-
-    margin: 50px auto 0; 
-
-} 
-
- 
 
 ul { 
 
@@ -137,16 +137,20 @@ button:hover {
 } 
 
  
+.dark-theme button {
+    background-color:  grey;
+    color: white;
 
+    
+   
+}
  
 
 /* Heading */ 
 
  
 
-h3, 
-
-label[for='new-task'] { 
+h3 { 
 
     color: #333; 
 
@@ -158,13 +162,19 @@ label[for='new-task'] {
 
     padding: 30px 0 10px; 
 
-    margin: 0; 
+    margin: 0px; 
 
     text-transform: uppercase; 
 
+    width: 100%;
+
 } 
 
- 
+.dark-theme h3 {
+    color:#ff6600;
+    border-bottom: 2px solid #ff6600;
+    
+}
 
 input[type="text"] { 
 
@@ -238,11 +248,36 @@ li {
 
     padding: 20px 0; 
 
-    border-bottom: 1px solid #eee; 
+    border-bottom: 1px solid black; 
+
+    color: #333; 
+
+    
+
+    font-size: 15px; 
+
+    border-bottom: 2px solid #333; 
+
+    padding: 30px 0 10px; 
+
 
 } 
+.left-container {
+    float: left;
+    margin-right: 20px; /* Adjust the margin as needed */
+  }
+  
+  .container {
+    overflow: hidden; /* Clear the float to contain the floated elements */
+  }
 
- 
+    
+  .image-button {
+    margin-bottom: 20px; /* Add some bottom margin to separate from the main content */
+  }
+
+
+
 
 li>input[type="checkbox"] { 
 
@@ -284,13 +319,26 @@ li>.delete:hover {
 
 } 
 
- 
 
  
+.dark-theme li {
+    color:#ff6600;
+    border-bottom: 2px solid #ff6600;
+}
+
+
+#incomplete-tasks hr{
+    width: 50%;
+    margin: 10px au;
+}
 
 /* Completed */ 
 
- 
+ .image-button { display: flex; flex-direction: column; align-items: center; }
+
+.image-button img { margin-top: 50px; width: 300px; height: 300px; border: 5px solid black; }
+
+.image-button button { margin-top: 10px; }
 
 #completed-tasks label { 
 
@@ -301,12 +349,16 @@ li>.delete:hover {
 } 
 
  
-
+image {
+    padding: 2px;
+}
  
 
 /* Edit Task */ 
 
- 
+ul {
+    width: 100%;
+}
 
 ul li input[type=text] { 
 
@@ -317,7 +369,7 @@ ul li input[type=text] {
  
 
 ul li.editMode input[type=text] { 
-
+    width: 100px;
     display: block; 
 
 } 
@@ -330,13 +382,20 @@ ul li.editMode label {
 
 } 
 
- 
+.right-list-container {
+    background-color: #ddd;
+    padding: 20px;
+    float: right;
+    margin-left: 20px; /* Adjust the margin to create space between the two containers */
+  }
 
 #clear { 
 
     font-size: 15px; 
 
-    float: right; 
+    float: right;
 
     text-align: center; 
 }
+
+

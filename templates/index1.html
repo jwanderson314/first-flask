@@ -1,254 +1,117 @@
-<html lang="en"> 
+<html lang="en">
 
- 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-do list</title>
+  <link rel="stylesheet" href="/static/styles/style.css">
+</head>
 
-<head> 
+<body>
 
-    <meta charset="UTF-8"> 
+  <div class="left-container">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <div class="stock-ticker">
+      <p id="stock-price">$192.33</p>
+    </div>
 
-    <title>To-do list</title> 
 
-    <link rel="stylesheet" href="style.css"> 
 
-</head> 
+    <div class="image-button">
+      <img id="skinImage" src="https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-4.png"
+        alt="your-image-alt">
+      <button id="generate-skin">Generate Skin</button>
+      <button id="clear-image">Clear Image</button>
+    </div>
+  </div>
 
- 
+  <div class="container">
+    <hr>
+    <div class="section1">
 
- 
+      <h1 id="title">TO DO LIST</h1>
 
-<body> 
+      <p>
 
- 
+      <h3>Add Tasks</h3>
 
-    <div class="container"> 
+      <input id="new-task" type="text">
 
-        <div class="section1"> 
+      <button id="submit">Add</button>
 
-            <h1 id="title">TO DO LIST</h1> 
-                
-                <p> 
+      </p>
 
-                    <label for="new-task">Add Tasks</label> 
+      <button id="toggleTheme">Toggle Theme</button>
 
-                    <input id="new-task" type="text"> 
+      <input type="file" id="file1" name="upload-file" value="">
+      <button id="submitf">Submit</button>
 
-                    <button id="submit">Add</button> 
+    </div>
 
-                </p> 
+    <div class="section2">
 
-            <button id="toggleTheme">Toggle Theme</button>
+      <h3>To-do</h3>
 
-            <input type="file" id="excelFileInput" accept=".xls, .xlsx">
-            <button id="uploadExcelBtn">Upload from Excel</button>
-        </div> 
+      <ul id="incomplete-tasks">
 
-        <div class="section2"> 
+      </ul>
 
-            <h3>To-do</h3> 
+    </div>
 
-            <ul id="incomplete-tasks"> 
+    <div class="section3">
 
- 
+      <h3>Completed Tasks</h3>
 
-            </ul> 
+      <ul id="completed-tasks">
 
-        </div> 
+      </ul>
 
-        <div class="section3"> 
+    </div>
 
-            <h3>Completed Tasks</h3> 
+    <div class="section4">
 
-            <ul id="completed-tasks"> 
+      <button id="clear">
+        <p>Clear</p>
+      </button>
 
-                <li> 
+    </div>
 
-                    <input type="checkbox" checked=""> 
+  </div>
 
-                    <label>Learn JavaScript</label> 
-
-                    <input type="text"> 
-
-                    <button class="edit">Edit</button> 
-
-                    <button class="delete">Delete</button> 
-
-                </li> 
-
-            </ul> 
-
-        </div> 
-
-        <div class="section4"> 
-
-            <button id="clear"> 
-
-            <p>Clear</p> 
-
-            </button> 
-
-        </div> 
-
-    </div> 
-
-    <script>
-        let taskInput = document.getElementById("new-task");
-let addButton = document.querySelector("button");
-//let addButton = document.getElementById("button");
-let incompleteTasks = document.getElementById("incomplete-tasks");
-let completedTasks = document.getElementById("completed-tasks");
-let clearButton = document.getElementById("clear");
-
-console.log("taskInput:", taskInput);
-console.log("addButton:", addButton);
-console.log("incompleteTasks:", incompleteTasks);
-console.log("completedTasks:", completedTasks);
-console.log("clearButton:", clearButton);
-let createNewTask = function (taskName) {
-  let listItem = document.createElement("li");
-  let checkBox = document.createElement("input");
-  let label = document.createElement("label");
-  let editInput = document.createElement("input");
-  let editButton = document.createElement("button");
-  let deleteButton = document.createElement("button");
-
-  checkBox.type = "checkBox";
-  editInput.type = "text";
-  editButton.innerText = "Edit";
-  editButton.className = "edit";
-  deleteButton.innerText = "Delete";
-  deleteButton.className = "delete";
-  label.innerText = taskName;
-  listItem.appendChild(checkBox);
-  listItem.appendChild(label);
-  listItem.appendChild(editInput);
-  listItem.appendChild(editButton);
-  listItem.appendChild(deleteButton);
-
-  return listItem;
-};
-let addTask = function () {
-  if (taskInput.value == "") {
-    alert("Task to be added should not be empty!");
-    return;
-  }
-  let listItem = createNewTask(taskInput.value);
-  incompleteTasks.appendChild(listItem);
-  bindTaskEvents(listItem, taskCompleted);
-  taskInput.value = "";
-};
-
-let editTask = function () {
-  let listItem = this.parentNode;
-  let editInput = listItem.querySelector("input[type=text]");
-  let label = listItem.querySelector("label");
-  let containsClass = listItem.classList.contains("editMode");
-  if (containsClass) {
-    label.innerText = editInput.value;
-  } else {
-    editInput.value = label.innerText;
-  }
-  listItem.classList.toggle("editMode");
-};
-let deleteTask = function () {
-  let listItem = this.parentNode;
-  let ul = listItem.parentNode;
-  ul.removeChild(listItem);
-};
-let taskCompleted = function () {
-  let listItem = this.parentNode;
-  completedTasks.appendChild(listItem);
-  bindTaskEvents(listItem, taskIncomplete);
-};
-
-let taskIncomplete = function () {
-  let listItem = this.parentNode;
-  incompleteTasks.appendChild(listItem);
-  bindTaskEvents(listItem, taskCompleted);
-};
-addButton.addEventListener("click", addTask);
-let bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
-  let checkBox = taskListItem.querySelector('input[type="checkbox"]');
-  let editButton = taskListItem.querySelector("button.edit");
-  let deleteButton = taskListItem.querySelector("button.delete");
-  editButton.onclick = editTask;
-  deleteButton.onclick = deleteTask;
-  checkBox.onchange = checkBoxEventHandler;
-};
-
-let clear = function () {
-  incompleteTasks.innerHTML = "";
-  completedTasks.innerHTML = "";
-};
-clearButton.addEventListener("click", clear);
-
-const toggleTheme = document.getElementById('toggleTheme')
-const container = document.querySelector('.container');
-
-toggleTheme.addEventListener('click', function (){
-  
-    
-    fetch('/toggle_theme', {method: 'POST'})
-        .then(response => response.json())
-        .then(data => {
+  <script src="/static/scripts/script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Function to fetch stock price and update the HTML element
+      function fetchStockPrice() {
+        fetch("/stock")
+          .then((response) => response.json())
+          .then((data) => {
             console.log(data)
-            document.body.classList.toggle('dark-theme', data.dark_mode)
-            console.log(document.body.style.backgroundColor)
-            console.log(document.body.style.backgroundColor + 1)
-            if(document.body.style.backgroundColor == 'rgb(128, 128, 128)')
-                document.body.style.backgroundColor = 'rgb(255, 255, 255)'; 
-            else
+            const stockPriceElement = document.getElementById("stock-price");
+            stockPriceElement.textContent = `Stock Price: $${data.stock_price}`;
+            
+          })
+          .catch((error) => {
+            console.error("Error fetching stock price:", error);
+          });
+      }
 
-                document.body.style.backgroundColor = 808080;
-        });
-        
-});
+      // Initial fetch
+      //fetchStockPrice();
+
+      
+      function updateStockPrice() {
+        fetchStockPrice();
+        setTimeout(updateStockPrice, 3000);
+      }
+
+      
+      //updateStockPrice();
+    });
+
+  </script>
+
+</body>
 
 
-document.getElementById('excelFileInput').addEventListener('change', handleFileUpload);
-
-function handleFileUpload(event) {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const content = e.target.result;
-            const tasks = parseExcelContent(content);
-
-            // Now tasks array contains the first value of each row before the comma
-            console.log(tasks);
-        };
-
-        reader.readAsText(file);
-    }
-}
-
-function parseExcelContent(content) {
-    const lines = content.split('\n');
-    const tasks = [];
-
-    for (const line of lines) {
-        // Split each line by comma and take the first part
-        const parts = line.split(',');
-        const firstValue = parts[0].trim();
-
-        // Add the first value to the tasks array
-        console.log(firstValue)
-    }
-
-    return tasks;
-}
-
-    </script> 
-
-</body> 
-
- 
-
- 
-
-</html> 
+</html>
